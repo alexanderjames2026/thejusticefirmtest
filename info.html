@@ -1,0 +1,1873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="The Justice Law Firm — elite trial lawyers delivering powerful results. Free case review available 24/7." />
+  <meta name="keywords" content="law firm, personal injury, employment law, class action, civil rights, litigation, attorney, free case review" />
+  <meta name="theme-color" content="#0B1220" />
+  <meta property="og:title" content="The Justice Law Firm" />
+  <meta property="og:description" content="Elite, tech-forward representation. Powerful results. Free case review 24/7." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1528747045269-390fe33c19f2?auto=format&fit=crop&w=1200&q=60" />
+  <meta property="og:url" content="#" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+  <script src="https://unpkg.com/three@0.160.0/examples/js/postprocessing/EffectComposer.js"></script>
+  <script src="https://unpkg.com/three@0.160.0/examples/js/postprocessing/RenderPass.js"></script>
+  <script src="https://unpkg.com/three@0.160.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+  <script src="https://unpkg.com/three@0.160.0/examples/js/postprocessing/ShaderPass.js"></script>
+  <script src="https://unpkg.com/three@0.160.0/examples/js/shaders/CopyShader.js"></script>
+  <script src="https://unpkg.com/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://unpkg.com/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <title>The Justice Law Firm | Premium Trial Counsel</title>
+
+  <style>
+    :root{
+      --bg0:#070B14;
+      --bg1:#0B1220;
+      --bg2:#0E1930;
+      --ink:#E9EEF8;
+      --muted:#AAB6D1;
+      --gold:#D7B15A;
+      --gold2:#F6E1A8;
+      --card: rgba(255,255,255,0.06);
+      --stroke: rgba(255,255,255,0.10);
+      --stroke2: rgba(215,177,90,0.22);
+      --shadow: 0 18px 60px rgba(0,0,0,0.55);
+      --shadow2: 0 12px 30px rgba(0,0,0,0.45);
+      --glow: 0 0 0 1px rgba(215,177,90,0.18), 0 20px 80px rgba(215,177,90,0.08);
+      --radius: 18px;
+      --radius2: 26px;
+    }
+
+    html, body { height: 100%; background: var(--bg0); color: var(--ink); }
+    body { font-family: Manrope, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; overflow-x: hidden; }
+    .font-serif { font-family: "Playfair Display", ui-serif, Georgia, serif; }
+
+    /* Smooth scroll */
+    html { scroll-behavior: smooth; }
+
+    /* Subtle animated grain + vignette */
+    .bg-wrap{
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      background:
+        radial-gradient(1200px 600px at 70% 10%, rgba(215,177,90,0.16), transparent 60%),
+        radial-gradient(900px 500px at 20% 25%, rgba(96,130,255,0.10), transparent 60%),
+        radial-gradient(900px 700px at 70% 80%, rgba(215,177,90,0.10), transparent 60%),
+        linear-gradient(180deg, var(--bg0), var(--bg1) 35%, var(--bg2));
+    }
+    .bg-wrap:before{
+      content:"";
+      position:absolute; inset:-30%;
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.34'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+      opacity: .10;
+      transform: rotate(4deg);
+      pointer-events:none;
+      animation: grain 10s steps(8) infinite;
+    }
+    .bg-wrap:after{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        radial-gradient(1200px 800px at 50% 35%, transparent 55%, rgba(0,0,0,0.55) 90%),
+        linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.5));
+      pointer-events:none;
+    }
+    @keyframes grain{
+      0%{ transform:translate(0,0) rotate(4deg); }
+      10%{ transform:translate(-3%, 2%) rotate(4deg); }
+      20%{ transform:translate(-6%, -2%) rotate(4deg); }
+      30%{ transform:translate(3%, 6%) rotate(4deg); }
+      40%{ transform:translate(8%, -3%) rotate(4deg); }
+      50%{ transform:translate(-6%, 8%) rotate(4deg); }
+      60%{ transform:translate(-10%, 3%) rotate(4deg); }
+      70%{ transform:translate(0%, -8%) rotate(4deg); }
+      80%{ transform:translate(10%, 0%) rotate(4deg); }
+      90%{ transform:translate(4%, 6%) rotate(4deg); }
+      100%{ transform:translate(0,0) rotate(4deg); }
+    }
+
+    /* Three canvas layer */
+    #threeWrap{
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+    }
+    canvas { display:block; }
+
+    /* Glass components */
+    .glass{
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+      border: 1px solid var(--stroke);
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-radius: var(--radius);
+    }
+    .glass-strong{
+      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04));
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: var(--radius2);
+    }
+    .edge-gold{
+      box-shadow: var(--glow), var(--shadow2);
+      border-color: rgba(215,177,90,0.22);
+    }
+
+    /* Buttons */
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:.55rem;
+      padding: .92rem 1.08rem;
+      border-radius: 14px;
+      font-weight: 700;
+      letter-spacing: .02em;
+      transition: transform .25s ease, box-shadow .25s ease, background .25s ease, border-color .25s ease;
+      will-change: transform;
+      user-select:none;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(400px 120px at var(--x,50%) var(--y,50%), rgba(246,225,168,0.22), transparent 55%);
+      opacity: 0;
+      transition: opacity .25s ease;
+      pointer-events:none;
+    }
+    .btn:hover:before{ opacity: 1; }
+    .btn:hover{ transform: translateY(-2px); }
+    .btn:active{ transform: translateY(0px) scale(0.99); }
+
+    .btn-primary{
+      color:#0B1220;
+      background: linear-gradient(180deg, rgba(246,225,168,0.98), rgba(215,177,90,0.95));
+      box-shadow: 0 14px 40px rgba(215,177,90,0.22), 0 6px 18px rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.18);
+    }
+    .btn-secondary{
+      color: var(--ink);
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(215,177,90,0.22);
+      box-shadow: 0 14px 40px rgba(0,0,0,0.38);
+    }
+    .btn-ghost{
+      color: var(--ink);
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.14);
+    }
+
+    /* Badge + highlights */
+    .badge{
+      display:inline-flex; align-items:center; gap:.5rem;
+      padding: .35rem .7rem;
+      border-radius: 999px;
+      font-size: .82rem;
+      color: rgba(233,238,248,0.92);
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    .dot{
+      width: 10px; height:10px; border-radius:999px;
+      background: radial-gradient(circle at 30% 30%, var(--gold2), var(--gold));
+      box-shadow: 0 0 0 4px rgba(215,177,90,0.14), 0 10px 22px rgba(215,177,90,0.12);
+    }
+    .gold{
+      background: linear-gradient(90deg, var(--gold2), var(--gold));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    /* Nav */
+    .nav{
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      background: linear-gradient(180deg, rgba(7,11,20,0.82), rgba(7,11,20,0.42));
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .nav a{ color: rgba(233,238,248,0.86); }
+    .nav a:hover{ color: rgba(246,225,168,0.95); }
+
+    /* Sections */
+    section{ position: relative; }
+    .section-pad{ padding: 84px 0; }
+    .container{ max-width: 1160px; margin: 0 auto; padding: 0 18px; }
+
+    /* Hero */
+    .hero{
+      padding: 86px 0 50px;
+      min-height: calc(100vh - 72px);
+      display:flex;
+      align-items:center;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.3fr .9fr;
+      gap: 22px;
+      align-items: center;
+    }
+    @media (max-width: 980px){
+      .hero{ padding-top: 70px; }
+      .hero-grid{ grid-template-columns: 1fr; }
+    }
+
+    .hero-card{
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-card:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(650px 320px at 20% 10%, rgba(246,225,168,0.16), transparent 60%),
+        radial-gradient(580px 300px at 90% 20%, rgba(96,130,255,0.16), transparent 55%),
+        radial-gradient(600px 360px at 70% 90%, rgba(215,177,90,0.10), transparent 60%);
+      opacity: .9;
+      pointer-events:none;
+    }
+
+    .hero h1{
+      font-family: "Playfair Display", ui-serif, Georgia, serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.04;
+      font-size: clamp(2.15rem, 4vw, 3.6rem);
+    }
+    .lead{
+      color: rgba(233,238,248,0.84);
+      font-size: clamp(1.02rem, 1.2vw, 1.15rem);
+      line-height: 1.65;
+    }
+
+    .hero-pills{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .pill{
+      display:inline-flex; align-items:center; gap:.5rem;
+      padding: .52rem .7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.05);
+      color: rgba(233,238,248,0.84);
+      font-size: .9rem;
+    }
+    .pill svg{ opacity: .9; }
+
+    /* Stat strip */
+    .stat-strip{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 18px;
+    }
+    @media (max-width: 520px){
+      .stat-strip{ grid-template-columns: 1fr; }
+    }
+    .stat{
+      padding: 14px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.04);
+    }
+    .stat .k{
+      font-weight: 800;
+      font-size: 1.15rem;
+      letter-spacing: .01em;
+    }
+    .stat .s{ color: rgba(170,182,209,0.88); font-size: .9rem; margin-top: 2px; }
+
+    /* Right panel */
+    .right-panel{
+      padding: 18px;
+      display:flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .mini{
+      padding: 14px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.04);
+    }
+    .mini h3{ font-weight: 800; letter-spacing: .01em; }
+    .mini p{ color: rgba(170,182,209,0.88); margin-top: 6px; line-height: 1.55; font-size:.95rem; }
+    .callout{
+      display:flex; gap: 10px; align-items:flex-start;
+    }
+    .ring{
+      width: 38px; height: 38px; border-radius: 14px;
+      display:grid; place-items:center;
+      background: linear-gradient(180deg, rgba(246,225,168,0.22), rgba(215,177,90,0.10));
+      border: 1px solid rgba(215,177,90,0.24);
+      box-shadow: 0 10px 30px rgba(215,177,90,0.10);
+    }
+
+    /* Section headers */
+    .kicker{
+      color: rgba(246,225,168,0.92);
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      font-size: .78rem;
+      font-weight: 800;
+    }
+    .h2{
+      font-family: "Playfair Display", ui-serif, Georgia, serif;
+      font-size: clamp(1.65rem, 2.6vw, 2.35rem);
+      line-height: 1.12;
+      letter-spacing: -0.01em;
+      margin-top: 10px;
+    }
+    .sub{
+      margin-top: 12px;
+      color: rgba(170,182,209,0.88);
+      line-height: 1.7;
+      max-width: 66ch;
+    }
+
+    /* Practice area cards */
+    .grid-areas{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+      margin-top: 26px;
+    }
+    .area{
+      grid-column: span 4;
+      padding: 18px 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      box-shadow: 0 18px 60px rgba(0,0,0,0.35);
+      position: relative;
+      overflow: hidden;
+      transform-style: preserve-3d;
+      transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+    }
+    .area:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(520px 260px at var(--mx,50%) var(--my,50%), rgba(246,225,168,0.16), transparent 55%),
+        radial-gradient(400px 220px at 20% 90%, rgba(96,130,255,0.10), transparent 60%);
+      opacity: .7;
+      pointer-events:none;
+    }
+    .area:hover{
+      border-color: rgba(215,177,90,0.24);
+      box-shadow: 0 26px 80px rgba(0,0,0,0.45), 0 0 0 1px rgba(215,177,90,0.18);
+    }
+    .area .icon{
+      width: 44px; height: 44px;
+      border-radius: 16px;
+      display:grid; place-items:center;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.10);
+      box-shadow: 0 14px 40px rgba(0,0,0,0.35);
+      margin-bottom: 12px;
+    }
+    .area h3{ font-weight: 800; letter-spacing: .01em; }
+    .area p{ margin-top: 8px; color: rgba(170,182,209,0.88); line-height: 1.6; font-size: .95rem; }
+    .area .more{
+      margin-top: 12px;
+      display:inline-flex; align-items:center; gap: .45rem;
+      color: rgba(246,225,168,0.88);
+      font-weight: 700;
+      font-size: .92rem;
+    }
+    .area .more svg{ transition: transform .2s ease; }
+    .area:hover .more svg{ transform: translateX(3px); }
+
+    @media (max-width: 980px){
+      .area{ grid-column: span 6; }
+    }
+    @media (max-width: 560px){
+      .area{ grid-column: span 12; }
+    }
+
+    /* Results */
+    .results-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 26px;
+      align-items: stretch;
+    }
+    @media (max-width: 980px){
+      .results-grid{ grid-template-columns: 1fr; }
+    }
+    .counter-card{
+      padding: 18px 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      box-shadow: 0 18px 60px rgba(0,0,0,0.35);
+      position: relative;
+      overflow: hidden;
+    }
+    .counter-card:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(620px 300px at 10% 10%, rgba(246,225,168,0.14), transparent 58%);
+      pointer-events:none;
+      opacity: .75;
+    }
+    .counter{
+      display:flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+    }
+    .counter .num{
+      font-size: clamp(2rem, 3.5vw, 2.9rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+    .counter .num .gold{ background: linear-gradient(90deg, var(--gold2), var(--gold)); -webkit-background-clip:text; background-clip:text; color: transparent; }
+    .counter .label{
+      color: rgba(170,182,209,0.88);
+      font-weight: 700;
+      letter-spacing: .01em;
+    }
+    .result-list{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    @media (max-width: 560px){
+      .result-list{ grid-template-columns: 1fr; }
+    }
+    .chip{
+      padding: 12px 12px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.10);
+      display:flex;
+      align-items:flex-start;
+      gap: 10px;
+    }
+    .chip b{ display:block; font-weight: 800; }
+    .chip span{ display:block; margin-top: 2px; color: rgba(170,182,209,0.88); font-size: .92rem; line-height: 1.5; }
+
+    /* About */
+    .about-grid{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 14px;
+      margin-top: 26px;
+      align-items: stretch;
+    }
+    @media (max-width: 980px){
+      .about-grid{ grid-template-columns: 1fr; }
+    }
+    .about-panel{
+      padding: 18px 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      box-shadow: 0 18px 60px rgba(0,0,0,0.35);
+      overflow: hidden;
+      position: relative;
+    }
+    .about-panel:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(700px 340px at 70% 10%, rgba(96,130,255,0.12), transparent 58%);
+      opacity: .75;
+      pointer-events:none;
+    }
+    .about-panel ul{ margin-top: 12px; display:grid; gap: 10px; }
+    .tick{
+      display:flex; gap: 10px; align-items:flex-start;
+      padding: 10px 10px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.09);
+      background: rgba(255,255,255,0.04);
+    }
+    .tick .mark{
+      width: 22px; height: 22px;
+      border-radius: 8px;
+      display:grid; place-items:center;
+      background: linear-gradient(180deg, rgba(246,225,168,0.22), rgba(215,177,90,0.10));
+      border: 1px solid rgba(215,177,90,0.22);
+      flex: 0 0 auto;
+      margin-top: 2px;
+    }
+    .tick p{ margin: 0; color: rgba(170,182,209,0.90); line-height: 1.55; font-size: .95rem; }
+    .portrait{
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.03);
+      box-shadow: 0 18px 60px rgba(0,0,0,0.40);
+      min-height: 310px;
+    }
+    .portrait img{
+      width:100%; height:100%;
+      object-fit: cover;
+      opacity: .72;
+      filter: contrast(1.05) saturate(1.05);
+      transform: scale(1.03);
+    }
+    .portrait:after{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        linear-gradient(180deg, rgba(7,11,20,0.15), rgba(7,11,20,0.82)),
+        radial-gradient(600px 280px at 30% 10%, rgba(246,225,168,0.18), transparent 60%);
+      pointer-events:none;
+    }
+    .portrait .overlay{
+      position:absolute; left: 14px; right: 14px; bottom: 14px;
+      padding: 14px 14px;
+    }
+    .overlay .big{
+      font-family: "Playfair Display", ui-serif, Georgia, serif;
+      font-size: 1.35rem;
+      letter-spacing: -0.01em;
+    }
+    .overlay .small{
+      color: rgba(170,182,209,0.90);
+      margin-top: 6px;
+      line-height: 1.55;
+      font-size: .95rem;
+    }
+
+    /* Testimonials */
+    .test-grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+      margin-top: 26px;
+    }
+    .quote{
+      grid-column: span 4;
+      padding: 18px 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      box-shadow: 0 18px 60px rgba(0,0,0,0.35);
+      position: relative;
+      overflow: hidden;
+    }
+    .quote:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(620px 260px at 40% 0%, rgba(246,225,168,0.12), transparent 58%);
+      opacity: .7; pointer-events:none;
+    }
+    .quote p{
+      color: rgba(233,238,248,0.86);
+      line-height: 1.7;
+      font-size: .98rem;
+    }
+    .quote .who{
+      margin-top: 12px;
+      display:flex; align-items:center; justify-content: space-between; gap: 12px;
+      color: rgba(170,182,209,0.90);
+      font-size: .92rem;
+    }
+    .stars{
+      display:inline-flex; gap: 2px; opacity: .95;
+      color: rgba(246,225,168,0.95);
+    }
+    @media (max-width: 980px){
+      .quote{ grid-column: span 6; }
+    }
+    @media (max-width: 560px){
+      .quote{ grid-column: span 12; }
+    }
+
+    /* Contact */
+    .contact-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 26px;
+      align-items: start;
+    }
+    @media (max-width: 980px){
+      .contact-grid{ grid-template-columns: 1fr; }
+    }
+    .form{
+      padding: 18px 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      box-shadow: 0 18px 60px rgba(0,0,0,0.35);
+      position: relative;
+      overflow: hidden;
+    }
+    .form:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(720px 320px at 10% 10%, rgba(96,130,255,0.14), transparent 58%);
+      opacity: .7; pointer-events:none;
+    }
+    .field{
+      display:grid;
+      gap: 7px;
+      margin-top: 12px;
+    }
+    label{ color: rgba(170,182,209,0.92); font-weight: 700; font-size: .92rem; }
+    input, textarea, select{
+      width: 100%;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(10,14,24,0.55);
+      color: rgba(233,238,248,0.92);
+      outline: none;
+      transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+    }
+    input::placeholder, textarea::placeholder{ color: rgba(170,182,209,0.60); }
+    input:focus, textarea:focus, select:focus{
+      border-color: rgba(215,177,90,0.30);
+      box-shadow: 0 0 0 4px rgba(215,177,90,0.10);
+    }
+    textarea{ min-height: 120px; resize: vertical; }
+    .urgent{
+      padding: 18px 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(215,177,90,0.24);
+      background: linear-gradient(180deg, rgba(246,225,168,0.10), rgba(255,255,255,0.03));
+      box-shadow: 0 24px 70px rgba(0,0,0,0.45), 0 0 0 1px rgba(215,177,90,0.18);
+      position: relative;
+      overflow: hidden;
+    }
+    .urgent:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(620px 260px at 50% 0%, rgba(246,225,168,0.20), transparent 60%);
+      opacity: .85; pointer-events:none;
+    }
+    .pulse{
+      display:inline-flex; align-items:center; gap: 10px;
+      margin-top: 10px;
+      color: rgba(233,238,248,0.88);
+      font-weight: 700;
+    }
+    .pulse i{
+      width: 10px; height: 10px; border-radius: 999px; background: rgba(255,74,74,0.95);
+      box-shadow: 0 0 0 0 rgba(255,74,74,0.50);
+      animation: pulse 1.6s ease-out infinite;
+    }
+    @keyframes pulse{
+      0%{ box-shadow: 0 0 0 0 rgba(255,74,74,0.45); }
+      70%{ box-shadow: 0 0 0 12px rgba(255,74,74,0); }
+      100%{ box-shadow: 0 0 0 0 rgba(255,74,74,0); }
+    }
+
+    /* Footer */
+    footer{
+      padding: 30px 0 46px;
+      color: rgba(170,182,209,0.78);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      background: linear-gradient(180deg, rgba(7,11,20,0), rgba(7,11,20,0.65));
+    }
+
+    /* Reveal */
+    .reveal{ opacity: 0; transform: translateY(18px); }
+    .no-motion .reveal{ opacity: 1 !important; transform: none !important; }
+
+    /* Mobile menu */
+    .drawer{
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      background: rgba(0,0,0,0.55);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      display:none;
+    }
+    .drawer.open{ display:block; }
+    .panel{
+      position:absolute;
+      top: 12px; right: 12px; left: 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+      box-shadow: var(--shadow);
+      padding: 14px;
+    }
+    .panel a{
+      display:flex; align-items:center; justify-content: space-between;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
+      color: rgba(233,238,248,0.92);
+      margin-top: 10px;
+    }
+
+    /* Parallax items */
+    [data-parallax]{ will-change: transform; transform: translate3d(0,0,0); }
+
+    /* Accessibility */
+    .skip{
+      position:absolute; left:-999px; top:auto; width:1px; height:1px; overflow:hidden;
+    }
+    .skip:focus{
+      left: 16px; top: 16px; width:auto; height:auto; padding: 10px 12px; z-index: 80;
+      background: rgba(0,0,0,0.75); color: white; border-radius: 12px; border: 1px solid rgba(255,255,255,0.18);
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <div class="bg-wrap" aria-hidden="true"></div>
+  <div id="threeWrap" aria-hidden="true"></div>
+
+  <header class="nav">
+    <div class="container">
+      <div class="flex items-center justify-between py-4">
+        <a href="#" class="flex items-center gap-3">
+          <span class="inline-grid place-items-center w-10 h-10 rounded-2xl border border-white/10 bg-white/5 shadow-[0_18px_60px_rgba(0,0,0,.35)]">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 2l2.2 5.2L20 9l-4.6 3.8L16.8 18 12 15.1 7.2 18l1.4-5.2L4 9l5.8-1.8L12 2z" stroke="rgba(246,225,168,.9)" stroke-width="1.4"/>
+            </svg>
+          </span>
+          <div class="leading-tight">
+            <div class="font-serif text-[1.05rem] tracking-tight text-white">The Justice Law Firm</div>
+            <div class="text-xs tracking-[.18em] uppercase text-white/60">Trial • Tech • Trust</div>
+          </div>
+        </a>
+
+        <nav class="hidden md:flex items-center gap-6 text-sm font-semibold">
+          <a href="#practice">Practice Areas</a>
+          <a href="#results">Results</a>
+          <a href="#about">About</a>
+          <a href="#testimonials">Testimonials</a>
+          <a href="#contact">Contact</a>
+          <a href="#contact" class="btn btn-primary" style="padding:.68rem .9rem;border-radius:14px;">
+            <span>Free Case Review</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h12M13 6l6 6-6 6" stroke="#0B1220" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </nav>
+
+        <button id="menuBtn" class="md:hidden btn btn-secondary" style="padding:.68rem .9rem;border-radius:14px;" aria-label="Open menu" aria-expanded="false">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16" stroke="rgba(246,225,168,.9)" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <span class="text-sm font-extrabold">Menu</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div id="drawer" class="drawer" aria-hidden="true">
+    <div class="panel">
+      <div class="flex items-center justify-between">
+        <div class="font-serif text-lg">Navigate</div>
+        <button id="closeDrawer" class="btn btn-ghost" style="padding:.55rem .75rem;border-radius:14px;" aria-label="Close menu">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="rgba(233,238,248,.9)" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <a href="#practice" class="drawerLink">Practice Areas <span class="text-white/60">→</span></a>
+      <a href="#results" class="drawerLink">Our Results <span class="text-white/60">→</span></a>
+      <a href="#about" class="drawerLink">About the Firm <span class="text-white/60">→</span></a>
+      <a href="#testimonials" class="drawerLink">Testimonials <span class="text-white/60">→</span></a>
+      <a href="#contact" class="drawerLink">Contact (24/7) <span class="text-white/60">→</span></a>
+      <a href="#contact" class="btn btn-primary w-full mt-3">Free Case Review</a>
+    </div>
+  </div>
+
+  <main id="main">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-grid">
+          <div class="glass-strong hero-card edge-gold p-6 md:p-8 reveal" data-parallax="0.10">
+            <div class="badge">
+              <span class="dot" aria-hidden="true"></span>
+              <span><span class="gold font-extrabold">Elite</span> representation for high-stakes matters</span>
+            </div>
+
+            <h1 class="mt-4">
+              Powerfully prepared.
+              <span class="gold">Relentlessly</span> results-driven.
+            </h1>
+
+            <p class="lead mt-4">
+              The Justice Law Firm combines trial-grade strategy with modern precision—built for the moments that matter most.
+              If the pressure is high, we’re the firm you want in the room.
+            </p>
+
+            <div class="mt-6 flex flex-col sm:flex-row gap-3">
+              <a href="#contact" class="btn btn-primary">
+                <span>Free Case Review</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h12M13 6l6 6-6 6" stroke="#0B1220" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+              <a href="#results" class="btn btn-secondary">
+                <span>Our Results</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="rgba(246,225,168,.9)" stroke-width="2" stroke-linecap="round"/></svg>
+              </a>
+            </div>
+
+            <div class="hero-pills">
+              <span class="pill">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 22s8-4 8-10V7l-8-4-8 4v5c0 6 8 10 8 10z" stroke="rgba(246,225,168,.9)" stroke-width="1.8"/></svg>
+                Trial-ready counsel
+              </span>
+              <span class="pill">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 7v6l4 2" stroke="rgba(246,225,168,.9)" stroke-width="1.8" stroke-linecap="round"/><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke="rgba(246,225,168,.6)" stroke-width="1.2"/></svg>
+                24/7 response
+              </span>
+              <span class="pill">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10" stroke="rgba(246,225,168,.9)" stroke-width="1.8" stroke-linecap="round"/></svg>
+                Transparent strategy
+              </span>
+            </div>
+
+            <div class="stat-strip" aria-label="Key firm statistics">
+              <div class="stat">
+                <div class="k"><span class="gold">$</span><span data-count="250" data-suffix="M+">0</span></div>
+                <div class="s">Recovered & secured</div>
+              </div>
+              <div class="stat">
+                <div class="k"><span data-count="98" data-suffix="%">0</span></div>
+                <div class="s">Client satisfaction*</div>
+              </div>
+              <div class="stat">
+                <div class="k"><span data-count="24" data-suffix="/7">0</span></div>
+                <div class="s">Case intake availability</div>
+              </div>
+            </div>
+
+            <div class="mt-3 text-xs text-white/55">
+              *Based on internal client feedback surveys. Past results do not guarantee future outcomes.
+            </div>
+          </div>
+
+          <aside class="right-panel glass-strong reveal" data-parallax="0.18">
+            <div class="mini">
+              <div class="callout">
+                <div class="ring" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                    <path d="M8 11a4 4 0 1 1 8 0c0 3-4 3-4 6" stroke="rgba(246,225,168,.95)" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M12 20h.01" stroke="rgba(246,225,168,.95)" stroke-width="3" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div>
+                  <h3>Fast clarity, decisive next steps</h3>
+                  <p>We’ll assess liability, evidence, and urgency—then map a strategy designed to win leverage early.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="mini">
+              <div class="callout">
+                <div class="ring" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 21s7-4 7-10V7l-7-4-7 4v4c0 6 7 10 7 10z" stroke="rgba(246,225,168,.95)" stroke-width="2"/>
+                    <path d="M9.5 12.2l1.7 1.7 3.6-4.1" stroke="rgba(246,225,168,.95)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <div>
+                  <h3>Elite protection, modern execution</h3>
+                  <p>Secure client portals, disciplined discovery, and trial-focused storytelling—built for high-end outcomes.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="mini edge-gold">
+              <div class="flex items-center justify-between gap-4">
+                <div>
+                  <div class="text-sm text-white/70 font-extrabold tracking-[.18em] uppercase">Confidential</div>
+                  <div class="mt-1 font-serif text-xl">Free Case Review</div>
+                  <div class="mt-1 text-white/70 text-sm">Response within minutes, 24/7.</div>
+                </div>
+                <a href="#contact" class="btn btn-primary" style="padding:.8rem .9rem;">
+                  <span>Start</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h12M13 6l6 6-6 6" stroke="#0B1220" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRACTICE AREAS -->
+    <section id="practice" class="section-pad">
+      <div class="container">
+        <div class="reveal">
+          <div class="kicker">Practice Areas</div>
+          <h2 class="h2">High-impact litigation, handled with precision.</h2>
+          <p class="sub">Select a practice area to preview our approach. Each team is built to move fast, build leverage, and prepare for trial from day one.</p>
+        </div>
+
+        <div class="grid-areas">
+          <article class="area reveal" data-tilt tabindex="0" role="button" aria-label="Personal Injury practice area">
+            <div class="icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M12 21s7-4 7-10V7l-7-4-7 4v4c0 6 7 10 7 10z" stroke="rgba(246,225,168,.95)" stroke-width="2"/>
+              </svg>
+            </div>
+            <h3>Personal Injury</h3>
+            <p>Serious injury claims, catastrophic damages, and complex liability—built for maximum recovery.</p>
+            <span class="more">Preview strategy
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h12M13 6l6 6-6 6" stroke="rgba(246,225,168,.95)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </article>
+
+          <article class="area reveal" data-tilt tabindex="0" role="button" aria-label="Employment Law practice area">
+            <div class="icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M9 6h6m-7 4h8m-9 4h10M8 3h8a2 2 0 0 1 2 2v16H6V5a2 2 0 0 1 2-2z" stroke="rgba(246,225,168,.95)" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3>Employment Law</h3>
+            <p>Wrongful termination, harassment, retaliation, wage & hour—aggressively pursued with documented proof.</p>
+            <span class="more">Preview strategy
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h12M13 6l6 6-6 6" stroke="rgba(246,225,168,.95)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </article>
+
+          <article class="area reveal" data-tilt tabindex="0" role="button" aria-label="Class Actions practice area">
+            <div class="icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M16 11a4 4 0 1 0-8 0v2a4 4 0 1 0 8 0v-2z" stroke="rgba(246,225,168,.95)" stroke-width="2"/>
+                <path d="M7 21h10" stroke="rgba(246,225,168,.75)" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3>Class Actions</h3>
+            <p>Scaled litigation against powerful entities—engineered for collective accountability and meaningful relief.</p>
+            <span class="more">Preview strategy
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h12M13 6l6 6-6 6" stroke="rgba(246,225,168,.95)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </article>
+
+          <article class="area reveal" data-tilt tabindex="0" role="button" aria-label="Civil Rights practice area">
+            <div class="icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M4 12h16" stroke="rgba(246,225,168,.95)" stroke-width="2" stroke-linecap="round"/>
+                <path d="M7 12c0 5 5 9 5 9s5-4 5-9" stroke="rgba(246,225,168,.95)" stroke-width="2" stroke-linecap="round"/>
+                <path d="M9 6h6" stroke="rgba(246,225,168,.75)" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3>Civil Rights</h3>
+            <p>Strategic advocacy for constitutional violations and institutional harm—built with clean, compelling narratives.</p>
+            <span class="more">Preview strategy
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h12M13 6l6 6-6 6" stroke="rgba(246,225,168,.95)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </article>
+
+          <article class="area reveal" data-tilt tabindex="0" role="button" aria-label="Business Litigation practice area">
+            <div class="icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M4 20V8l8-4 8 4v12H4z" stroke="rgba(246,225,168,.95)" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M9 20v-8h6v8" stroke="rgba(246,225,168,.75)" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3>Business Litigation</h3>
+            <p>Contracts, fiduciary duty, fraud, partnership disputes—structured for rapid leverage and decisive outcomes.</p>
+            <span class="more">Preview strategy
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h12M13 6l6 6-6 6" stroke="rgba(246,225,168,.95)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </article>
+
+          <article class="area reveal" data-tilt tabindex="0" role="button" aria-label="Consumer Protection practice area">
+            <div class="icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M12 2l3 7h7l-5.6 4 2 7-6.4-4.3L5.6 20l2-7L2 9h7l3-7z" stroke="rgba(246,225,168,.95)" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3>Consumer Protection</h3>
+            <p>Unfair practices, defective products, hidden fees—modern evidence collection and aggressive negotiation.</p>
+            <span class="more">Preview strategy
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h12M13 6l6 6-6 6" stroke="rgba(246,225,168,.95)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESULTS -->
+    <section id="results" class="section-pad">
+      <div class="container">
+        <div class="reveal">
+          <div class="kicker">Case Results</div>
+          <h2 class="h2">Measured wins. Real leverage. Relentless execution.</h2>
+          <p class="sub">Our results reflect disciplined preparation, high-end negotiation, and trial readiness. Every case is built like it’s going to verdict.</p>
+        </div>
+
+        <div class="results-grid">
+          <div class="counter-card reveal edge-gold">
+            <div class="counter">
+              <div class="num"><span class="gold">$</span><span data-count="250" data-suffix="M+">0</span></div>
+              <div class="label">Total recoveries & settlements*</div>
+            </div>
+            <div class="result-list" aria-label="Representative results">
+              <div class="chip">
+                <div class="ring" aria-hidden="true" style="width:34px;height:34px;border-radius:14px;">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 3v18M6 9h12" stroke="rgba(246,225,168,.95)" stroke-width="2" stroke-linecap="round"/></svg>
+                </div>
+                <div>
+                  <b><span class="gold">$9.4M</span> Product claim</b>
+                  <span>Defect & failure-to-warn litigation</span>
+                </div>
+              </div>
+              <div class="chip">
+                <div class="ring" aria-hidden="true" style="width:34px;height:34px;border-radius:14px;">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12h16" stroke="rgba(246,225,168,.95)" stroke-width="2" stroke-linecap="round"/><path d="M12 4v16" stroke="rgba(246,225,168,.75)" stroke-width="2" stroke-linecap="round"/></svg>
+                </div>
+                <div>
+                  <b><span class="gold">$6.1M</span> Employment matter</b>
+                  <span>Retaliation & wage recovery</span>
+                </div>
+              </div>
+              <div class="chip">
+                <div class="ring" aria-hidden="true" style="width:34px;height:34px;border-radius:14px;">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2l7 5v6c0 5-7 9-7 9s-7-4-7-9V7l7-5z" stroke="rgba(246,225,168,.95)" stroke-width="2"/></svg>
+                </div>
+                <div>
+                  <b><span class="gold">$3.8M</span> Catastrophic injury</b>
+                  <span>Early leverage + structured settlement</span>
+                </div>
+              </div>
+              <div class="chip">
+                <div class="ring" aria-hidden="true" style="width:34px;height:34px;border-radius:14px;">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M8 10h8M6 14h12" stroke="rgba(246,225,168,.95)" stroke-width="2" stroke-linecap="round"/></svg>
+                </div>
+                <div>
+                  <b><span class="gold">$2.2M</span> Consumer fraud</b>
+                  <span>Class settlement + injunctive relief</span>
+                </div>
+              </div>
+            </div>
+            <div class="mt-3 text-xs text-white/55">
+              *Representative figures shown for design/demo purposes. Past results do not guarantee future outcomes.
+            </div>
+          </div>
+
+          <div class="counter-card reveal">
+            <div class="counter">
+              <div class="num"><span data-count="1200" data-suffix="+">0</span></div>
+              <div class="label">Clients served across complex matters</div>
+            </div>
+
+            <div class="mt-3 grid gap-10">
+              <div class="result-list" style="grid-template-columns:1fr;">
+                <div class="chip">
+                  <div class="ring" aria-hidden="true" style="width:34px;height:34px;border-radius:14px;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M7 17l10-10" stroke="rgba(246,225,168,.95)" stroke-width="2" stroke-linecap="round"/><path d="M7 7h10v10" stroke="rgba(246,225,168,.75)" stroke-width="2" stroke-linecap="round"/></svg>
+                  </div>
+                  <div>
+                    <b>Built for trial pressure</b>
+                    <span>We prepare narratives, experts, and evidence as if the jury is already seated.</span>
+                  </div>
+                </div>
+
+                <div class="chip">
+                  <div class="ring" aria-hidden="true" style="width:34px;height:34px;border-radius:14px;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h10" stroke="rgba(246,225,168,.95)" stroke-width="2" stroke-linecap="round"/></svg>
+                  </div>
+                  <div>
+                    <b>Modern litigation systems</b>
+                    <span>Secure intake, clean documentation, and disciplined deadlines—so nothing falls through.</span>
+                  </div>
+                </div>
+
+                <div class="chip">
+                  <div class="ring" aria-hidden="true" style="width:34px;height:34px;border-radius:14px;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 3v18" stroke="rgba(246,225,168,.95)" stroke-width="2" stroke-linecap="round"/><path d="M5 12h14" stroke="rgba(246,225,168,.75)" stroke-width="2" stroke-linecap="round"/></svg>
+                  </div>
+                  <div>
+                    <b>Negotiation with teeth</b>
+                    <span>We negotiate from strength—powered by evidence, experts, and readiness to litigate.</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-12">
+                <div class="counter">
+                  <div class="num"><span data-count="48" data-suffix="hrs">0</span></div>
+                  <div class="label">Average time to action plan</div>
+                </div>
+                <div class="counter">
+                  <div class="num"><span data-count="350" data-suffix="+">0</span></div>
+                  <div class="label">High-stakes matters resolved</div>
+                </div>
+              </div>
+
+              <div class="flex flex-wrap gap-3">
+                <a href="#contact" class="btn btn-primary">Request a Free Review</a>
+                <a href="#practice" class="btn btn-ghost">Explore Practice Areas</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="section-pad">
+      <div class="container">
+        <div class="reveal">
+          <div class="kicker">About the Firm</div>
+          <h2 class="h2">Elite advocacy with a modern backbone.</h2>
+          <p class="sub">We are built for demanding clients and high-end expectations: discreet communication, decisive strategy, and a courtroom-first mindset.</p>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-panel reveal">
+            <div class="font-serif text-xl">A firm engineered for leverage</div>
+            <p class="mt-2 text-white/75 leading-relaxed">
+              The Justice Law Firm operates like a premium litigation studio—precision intake, disciplined discovery, and cinematic storytelling that makes decision-makers pay attention.
+            </p>
+
+            <ul>
+              <li class="tick">
+                <span class="mark" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="rgba(246,225,168,.95)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                <p><b class="text-white/90">Trial-forward strategy</b> from day one—no wasted motion, no weak posture.</p>
+              </li>
+              <li class="tick">
+                <span class="mark" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="rgba(246,225,168,.95)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                <p><b class="text-white/90">High-touch communication</b> with secure, modern case management.</p>
+              </li>
+              <li class="tick">
+                <span class="mark" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="rgba(246,225,168,.95)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                <p><b class="text-white/90">Evidence-driven negotiation</b> designed to force meaningful offers.</p>
+              </li>
+              <li class="tick">
+                <span class="mark" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="rgba(246,225,168,.95)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                <p><b class="text-white/90">Cinematic clarity</b>—we turn complexity into compelling truth.</p>
+              </li>
+            </ul>
+
+            <div class="mt-4 flex flex-wrap gap-3">
+              <a href="#contact" class="btn btn-secondary">Talk to an Attorney</a>
+              <a href="#results" class="btn btn-ghost">View Results</a>
+            </div>
+          </div>
+
+          <div class="portrait reveal" data-parallax="0.12">
+            <img alt="Courthouse interior with dramatic light beams" loading="lazy"
+                 src="https://images.unsplash.com/photo-1505664063603-28e48ca204eb?auto=format&fit=crop&w=1200&q=70" />
+            <div class="overlay glass edge-gold">
+              <div class="big">Trusted under pressure.</div>
+              <div class="small">We move fast when time matters—injuries, investigations, workplace violations, and high-stakes disputes.</div>
+              <div class="mt-3 flex flex-wrap gap-2">
+                <span class="badge" style="border-color: rgba(215,177,90,0.22); background: rgba(215,177,90,0.08);">
+                  <span class="dot" aria-hidden="true"></span> 24/7 intake
+                </span>
+                <span class="badge">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 22s8-4 8-10V7l-8-4-8 4v5c0 6 8 10 8 10z" stroke="rgba(246,225,168,.9)" stroke-width="1.7"/></svg>
+                  Confidential
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section id="testimonials" class="section-pad">
+      <div class="container">
+        <div class="reveal">
+          <div class="kicker">Testimonials</div>
+          <h2 class="h2">White-glove service. Serious outcomes.</h2>
+          <p class="sub">A premium client experience—direct answers, proactive updates, and courtroom-ready preparation.</p>
+        </div>
+
+        <div class="test-grid" role="list">
+          <article class="quote reveal" role="listitem">
+            <div class="stars" aria-label="5 star rating">
+              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+            </div>
+            <p class="mt-3">“They treated my case like it was the only one on their desk. Clear strategy, fast updates, and real power in negotiations.”</p>
+            <div class="who">
+              <span><b class="text-white/85">A.R.</b> — Injury Client</span>
+              <span class="text-white/55">Verified</span>
+            </div>
+          </article>
+
+          <article class="quote reveal" role="listitem">
+            <div class="stars" aria-label="5 star rating">
+              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+            </div>
+            <p class="mt-3">“Crisis-level responsiveness. They took control immediately and built a plan that made the other side take us seriously.”</p>
+            <div class="who">
+              <span><b class="text-white/85">M.K.</b> — Employment Client</span>
+              <span class="text-white/55">Verified</span>
+            </div>
+          </article>
+
+          <article class="quote reveal" role="listitem">
+            <div class="stars" aria-label="5 star rating">
+              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+            </div>
+            <p class="mt-3">“Professional, discreet, and relentless. Their preparation felt like a premium operation—no gaps, no guesswork.”</p>
+            <div class="who">
+              <span><b class="text-white/85">S.D.</b> — Litigation Client</span>
+              <span class="text-white/55">Verified</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section-pad">
+      <div class="container">
+        <div class="reveal">
+          <div class="kicker">Contact</div>
+          <h2 class="h2">Free, confidential case review — 24/7.</h2>
+          <p class="sub">If you’re facing an urgent situation, do not wait. Send a message now—our team responds quickly and discreetly.</p>
+        </div>
+
+        <div class="contact-grid">
+          <form class="form reveal" id="contactForm" novalidate>
+            <div class="flex items-center justify-between gap-3">
+              <div>
+                <div class="font-serif text-xl">Start your review</div>
+                <div class="text-white/70 text-sm mt-1">No obligation. Confidential intake.</div>
+              </div>
+              <span class="badge" title="Secure form" style="border-color: rgba(215,177,90,0.22); background: rgba(215,177,90,0.08);">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 11V8a5 5 0 0 1 10 0v3" stroke="rgba(246,225,168,.9)" stroke-width="1.8" stroke-linecap="round"/><path d="M6 11h12v10H6V11z" stroke="rgba(246,225,168,.65)" stroke-width="1.5"/></svg>
+                Secure
+              </span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
+              <div class="field">
+                <label for="name">Full name</label>
+                <input id="name" name="name" autocomplete="name" placeholder="Jane Doe" required />
+              </div>
+              <div class="field">
+                <label for="phone">Phone</label>
+                <input id="phone" name="phone" autocomplete="tel" placeholder="(555) 123-4567" required />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div class="field">
+                <label for="email">Email</label>
+                <input id="email" name="email" autocomplete="email" placeholder="jane@domain.com" type="email" required />
+              </div>
+              <div class="field">
+                <label for="matter">Matter type</label>
+                <select id="matter" name="matter" required>
+                  <option value="" selected disabled>Select…</option>
+                  <option>Personal Injury</option>
+                  <option>Employment Law</option>
+                  <option>Class Action</option>
+                  <option>Civil Rights</option>
+                  <option>Business Litigation</option>
+                  <option>Consumer Protection</option>
+                  <option>Other</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="message">What happened?</label>
+              <textarea id="message" name="message" placeholder="Briefly describe your situation, timing, and any documents you have." required></textarea>
+            </div>
+
+            <div class="mt-3 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+              <button class="btn btn-primary" type="submit">
+                <span>Send for Review</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M22 2L11 13" stroke="#0B1220" stroke-width="2" stroke-linecap="round"/><path d="M22 2l-7 20-4-9-9-4L22 2z" stroke="#0B1220" stroke-width="2" stroke-linejoin="round"/></svg>
+              </button>
+              <div class="text-xs text-white/55 leading-relaxed">
+                By submitting, you agree we may contact you. <span class="text-white/70">This form does not create an attorney-client relationship.</span>
+              </div>
+            </div>
+
+            <div id="formNote" class="mt-3 text-sm" aria-live="polite"></div>
+          </form>
+
+          <aside class="urgent reveal edge-gold" data-parallax="0.14">
+            <div class="font-serif text-xl">Urgent? We answer 24/7.</div>
+            <div class="pulse"><i aria-hidden="true"></i><span>Immediate intake available — nights & weekends</span></div>
+
+            <div class="mt-4 grid gap-3">
+              <div class="mini" style="background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.10);">
+                <div class="flex items-start gap-3">
+                  <div class="ring" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                      <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.4 19.4 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.5 2.1L8 9.5a16 16 0 0 0 6 6l1.1-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.5 2.6.6a2 2 0 0 1 1.7 2z" stroke="rgba(246,225,168,.95)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="font-extrabold text-white/90">Call (555) 014-2026</div>
+                    <div class="text-white/70 text-sm mt-1">If time-sensitive, calling is best.</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mini" style="background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.10);">
+                <div class="flex items-start gap-3">
+                  <div class="ring" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                      <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v8z" stroke="rgba(246,225,168,.95)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="font-extrabold text-white/90">Text “JUSTICE” to (555) 010-9090</div>
+                    <div class="text-white/70 text-sm mt-1">Quick triage and next steps.</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mini" style="background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.10);">
+                <div class="flex items-start gap-3">
+                  <div class="ring" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                      <path d="M12 22s8-4 8-10V7l-8-4-8 4v5c0 6 8 10 8 10z" stroke="rgba(246,225,168,.95)" stroke-width="2"/>
+                      <path d="M9 12l2 2 4-5" stroke="rgba(246,225,168,.95)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="font-extrabold text-white/90">Confidential • Secure • Discreet</div>
+                    <div class="text-white/70 text-sm mt-1">We protect your information and move with purpose.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-4 flex flex-wrap gap-3">
+              <a class="btn btn-primary" href="#contact" id="urgentCta">Start Intake Now</a>
+              <a class="btn btn-ghost" href="#practice">See Practice Areas</a>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+        <div>
+          <div class="font-serif text-lg text-white/90">The Justice Law Firm</div>
+          <div class="text-sm mt-1 text-white/60">Premium litigation strategy • Dark-navy, gold-accent experience</div>
+        </div>
+        <div class="text-sm text-white/55">
+          © <span id="year"></span> The Justice Law Firm. All rights reserved.
+          <span class="hidden sm:inline"> • Attorney advertising. </span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal for Practice Area (interactive) -->
+  <div id="modal" class="drawer" aria-hidden="true">
+    <div class="panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="flex items-center justify-between gap-3">
+        <div>
+          <div class="kicker">Practice Area</div>
+          <div id="modalTitle" class="font-serif text-xl mt-1">Title</div>
+        </div>
+        <button id="closeModal" class="btn btn-ghost" style="padding:.55rem .75rem;border-radius:14px;" aria-label="Close dialog">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="rgba(233,238,248,.9)" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <div id="modalBody" class="mt-3 text-white/75 leading-relaxed"></div>
+      <div class="mt-4 flex flex-col sm:flex-row gap-3">
+        <a href="#contact" class="btn btn-primary w-full sm:w-auto">Free Case Review</a>
+        <button id="modalSecondary" class="btn btn-secondary w-full sm:w-auto" type="button">View Results</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Respect reduced motion
+    const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) document.documentElement.classList.add('no-motion');
+
+    // Footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Button hover spotlight coordinates
+    function attachSpotlight(btn){
+      btn.addEventListener('pointermove', (e)=>{
+        const r = btn.getBoundingClientRect();
+        const x = ((e.clientX - r.left) / r.width) * 100;
+        const y = ((e.clientY - r.top) / r.height) * 100;
+        btn.style.setProperty('--x', x + '%');
+        btn.style.setProperty('--y', y + '%');
+      });
+    }
+    document.querySelectorAll('.btn').forEach(attachSpotlight);
+
+    // Mobile drawer
+    const drawer = document.getElementById('drawer');
+    const menuBtn = document.getElementById('menuBtn');
+    const closeDrawer = document.getElementById('closeDrawer');
+    const drawerLinks = document.querySelectorAll('.drawerLink');
+    function openDrawer(){
+      drawer.classList.add('open');
+      drawer.setAttribute('aria-hidden','false');
+      menuBtn.setAttribute('aria-expanded','true');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeDrawerFn(){
+      drawer.classList.remove('open');
+      drawer.setAttribute('aria-hidden','true');
+      menuBtn.setAttribute('aria-expanded','false');
+      document.body.style.overflow = '';
+    }
+    menuBtn?.addEventListener('click', openDrawer);
+    closeDrawer?.addEventListener('click', closeDrawerFn);
+    drawer?.addEventListener('click', (e)=>{ if (e.target === drawer) closeDrawerFn(); });
+    drawerLinks.forEach(a => a.addEventListener('click', ()=> setTimeout(closeDrawerFn, 120)));
+
+    // Practice area modal
+    const modal = document.getElementById('modal');
+    const closeModal = document.getElementById('closeModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalBody = document.getElementById('modalBody');
+    const modalSecondary = document.getElementById('modalSecondary');
+
+    const areaDetails = {
+      "Personal Injury": "We build damages like a financial model: medical narrative, future care, loss calculations, and liability proof. Expect swift evidence preservation, expert alignment, and a trial-ready story designed to command serious offers.",
+      "Employment Law": "We move fast on documents, timelines, and witness narratives. From retaliation to wage theft, we build a clean record, demand accountability, and position the case for maximum leverage at mediation or trial.",
+      "Class Actions": "We investigate patterns, assemble scalable proof, and pursue relief that matters—financial and injunctive. Our approach is disciplined: rigorous certification strategy, data-driven claims, and clear class storytelling.",
+      "Civil Rights": "We document violations with precision and present facts with clarity. Expect a case built for credibility: corroboration, expert context, and strategic motion practice—without noise or theatrics.",
+      "Business Litigation": "We treat disputes like campaigns: identify pressure points, protect assets, and pursue decisive outcomes. We combine tight legal theory with practical leverage, from early injunctions to dispositive motions.",
+      "Consumer Protection": "We investigate deceptive conduct, preserve proof, and force transparency. Whether individual or classwide, we use modern documentation and narrative structure to compel meaningful resolution."
+    };
+
+    let lastFocus = null;
+    function openModalFor(title){
+      lastFocus = document.activeElement;
+      modalTitle.textContent = title;
+      modalBody.textContent = areaDetails[title] || "We tailor strategy to your facts, evidence, and urgency—built for leverage and trial readiness.";
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+      closeModal.focus();
+    }
+    function closeModalFn(){
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden','true');
+      document.body.style.overflow = '';
+      if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+    }
+    closeModal?.addEventListener('click', closeModalFn);
+    modal?.addEventListener('click', (e)=>{ if (e.target === modal) closeModalFn(); });
+    document.addEventListener('keydown', (e)=>{ if (e.key === 'Escape') { if (modal.classList.contains('open')) closeModalFn(); if (drawer.classList.contains('open')) closeDrawerFn(); } });
+    modalSecondary?.addEventListener('click', ()=>{ closeModalFn(); location.hash = "#results"; });
+
+    document.querySelectorAll('.area').forEach(card=>{
+      const title = card.querySelector('h3')?.textContent?.trim() || "Practice Area";
+      card.addEventListener('click', ()=> openModalFor(title));
+      card.addEventListener('keydown', (e)=>{ if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModalFor(title); } });
+    });
+
+    // Tilt & hover gradient tracking on practice cards
+    const tiltCards = document.querySelectorAll('[data-tilt]');
+    tiltCards.forEach(el=>{
+      let raf = null;
+      function onMove(e){
+        const r = el.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width;
+        const py = (e.clientY - r.top) / r.height;
+        el.style.setProperty('--mx', (px*100).toFixed(2) + '%');
+        el.style.setProperty('--my', (py*100).toFixed(2) + '%');
+
+        if (prefersReduced) return;
+        const rotY = (px - 0.5) * 10;
+        const rotX = (0.5 - py) * 10;
+        if (raf) cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(()=>{
+          el.style.transform = `translateY(-2px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg)`;
+        });
+      }
+      function onLeave(){
+        el.style.transform = '';
+      }
+      el.addEventListener('pointermove', onMove);
+      el.addEventListener('pointerleave', onLeave);
+    });
+
+    // Contact form (demo)
+    const form = document.getElementById('contactForm');
+    const note = document.getElementById('formNote');
+    function isEmail(s){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(s||'').trim()); }
+    form?.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      note.className = "mt-3 text-sm";
+      const data = Object.fromEntries(new FormData(form).entries());
+      const missing = [];
+      if (!String(data.name||'').trim()) missing.push("name");
+      if (!String(data.phone||'').trim()) missing.push("phone");
+      if (!isEmail(data.email)) missing.push("email");
+      if (!String(data.matter||'').trim()) missing.push("matter type");
+      if (!String(data.message||'').trim()) missing.push("message");
+
+      if (missing.length){
+        note.textContent = "Please complete: " + missing.join(", ") + ".";
+        note.style.color = "rgba(255, 180, 180, .95)";
+        return;
+      }
+
+      note.textContent = "Submitted. A member of our team will respond shortly (24/7).";
+      note.style.color = "rgba(246, 225, 168, .95)";
+      form.reset();
+    });
+
+    // GSAP reveals + counters
+    gsap.registerPlugin(ScrollTrigger);
+
+    if (!prefersReduced){
+      gsap.utils.toArray('.reveal').forEach((el, i)=>{
+        gsap.to(el, {
+          opacity: 1,
+          y: 0,
+          duration: 0.85,
+          ease: "power3.out",
+          delay: Math.min(i*0.02, 0.18),
+          scrollTrigger: { trigger: el, start: "top 85%", once: true }
+        });
+      });
+    } else {
+      document.querySelectorAll('.reveal').forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; });
+    }
+
+    // Animated counters (runs once on first visibility)
+    const counters = document.querySelectorAll('[data-count]');
+    counters.forEach(el=>{
+      const target = parseFloat(el.getAttribute('data-count')) || 0;
+      const suffix = el.getAttribute('data-suffix') || '';
+      const isMoney = el.previousElementSibling && el.previousElementSibling.textContent.trim() === '$';
+      const decimals = (String(target).includes('.')) ? 1 : 0;
+
+      const obj = { val: 0 };
+      ScrollTrigger.create({
+        trigger: el,
+        start: "top 85%",
+        once: true,
+        onEnter: ()=>{
+          if (prefersReduced){
+            el.textContent = (decimals ? target.toFixed(decimals) : Math.round(target).toString()) + suffix;
+            return;
+          }
+          gsap.to(obj, {
+            val: target,
+            duration: 1.25,
+            ease: "power2.out",
+            onUpdate: ()=>{
+              const v = decimals ? obj.val.toFixed(decimals) : Math.round(obj.val).toString();
+              el.textContent = v + suffix;
+            }
+          });
+        }
+      });
+    });
+
+    // Parallax (subtle)
+    const parallaxEls = [...document.querySelectorAll('[data-parallax]')];
+    function parallaxTick(){
+      const y = window.scrollY || 0;
+      const vh = window.innerHeight || 800;
+      for (const el of parallaxEls){
+        const strength = parseFloat(el.getAttribute('data-parallax') || '0.12');
+        const r = el.getBoundingClientRect();
+        const center = r.top + r.height/2;
+        const delta = (center - vh/2) / (vh/2);
+        const t = -delta * 18 * strength;
+        el.style.transform = prefersReduced ? '' : `translate3d(0, ${t.toFixed(2)}px, 0)`;
+      }
+      requestAnimationFrame(parallaxTick);
+    }
+    requestAnimationFrame(parallaxTick);
+
+    // Three.js premium 3D scene: scales, pillars, abstract legal shapes with depth & parallax
+    (function initThree(){
+      const wrap = document.getElementById('threeWrap');
+      if (!wrap || !window.THREE) return;
+
+      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.outputColorSpace = THREE.SRGBColorSpace;
+      wrap.appendChild(renderer.domElement);
+
+      const scene = new THREE.Scene();
+
+      const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 120);
+      camera.position.set(0, 0.1, 9.6);
+
+      // Lighting - cinematic
+      const key = new THREE.DirectionalLight(0xF6E1A8, 1.35);
+      key.position.set(6, 7, 8);
+      scene.add(key);
+
+      const fill = new THREE.DirectionalLight(0x5A84FF, 0.55);
+      fill.position.set(-7, 2, 8);
+      scene.add(fill);
+
+      const rim = new THREE.DirectionalLight(0xD7B15A, 0.55);
+      rim.position.set(-2, 8, -6);
+      scene.add(rim);
+
+      const ambient = new THREE.AmbientLight(0x1B2A4A, 0.55);
+      scene.add(ambient);
+
+      const group = new THREE.Group();
+      scene.add(group);
+
+      // Materials - metallic gold and smoked glass
+      const goldMat = new THREE.MeshStandardMaterial({
+        color: 0xD7B15A,
+        metalness: 0.9,
+        roughness: 0.22,
+        envMapIntensity: 1.1
+      });
+
+      const darkMetal = new THREE.MeshStandardMaterial({
+        color: 0x0B1220,
+        metalness: 0.75,
+        roughness: 0.35
+      });
+
+      const glassMat = new THREE.MeshPhysicalMaterial({
+        color: 0x9FB6FF,
+        transmission: 1.0,
+        thickness: 0.6,
+        roughness: 0.14,
+        metalness: 0.0,
+        ior: 1.5,
+        transparent: true,
+        opacity: 0.28,
+        clearcoat: 0.6,
+        clearcoatRoughness: 0.2
+      });
+
+      // Subtle environment approximation
+      const pmrem = new THREE.PMREMGenerator(renderer);
+      const envScene = new THREE.Scene();
+      envScene.add(new THREE.AmbientLight(0xffffff, 1.0));
+      const env = pmrem.fromScene(envScene, 0.5).texture;
+      scene.environment = env;
+
+      // Abstract courthouse pillars (left/right)
+      function makePillar(x, z, h=3.4){
+        const g = new THREE.CylinderGeometry(0.26, 0.32, h, 24, 1, true);
+        const m = darkMetal.clone();
+        m.roughness = 0.45;
+        const mesh = new THREE.Mesh(g, m);
+        mesh.position.set(x, -0.2, z);
+        mesh.rotation.y = (x>0? -0.2 : 0.2);
+        return mesh;
+      }
+      const pillarL = makePillar(-3.6, -1.2, 3.6);
+      const pillarR = makePillar(3.6, -1.2, 3.2);
+      group.add(pillarL, pillarR);
+
+      // Stylized scales of justice (center)
+      const scales = new THREE.Group();
+
+      const base = new THREE.Mesh(new THREE.CylinderGeometry(0.62, 0.86, 0.25, 48), goldMat);
+      base.position.set(0, -1.5, 0);
+      scales.add(base);
+
+      const stem = new THREE.Mesh(new THREE.CylinderGeometry(0.10, 0.16, 2.8, 28), goldMat);
+      stem.position.set(0, -0.1, 0);
+      scales.add(stem);
+
+      const beam = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 3.4, 20), goldMat);
+      beam.position.set(0, 1.15, 0);
+      beam.rotation.z = Math.PI/2;
+      scales.add(beam);
+
+      const finial = new THREE.Mesh(new THREE.SphereGeometry(0.16, 28, 18), goldMat);
+      finial.position.set(0, 1.55, 0);
+      scales.add(finial);
+
+      // chains + pans
+      function makePan(side=1){
+        const panGroup = new THREE.Group();
+        const hook = new THREE.Mesh(new THREE.SphereGeometry(0.08, 18, 12), goldMat);
+        hook.position.set(1.7*side, 1.15, 0);
+        panGroup.add(hook);
+
+        const chainGeo = new THREE.CylinderGeometry(0.015, 0.015, 0.95, 10);
+        for (let i=0;i<3;i++){
+          const c = new THREE.Mesh(chainGeo, goldMat);
+          c.position.set(1.7*side + (i-1)*0.07*side, 0.72, 0);
+          c.rotation.z = 0.05*side;
+          panGroup.add(c);
+        }
+
+        const pan = new THREE.Mesh(new THREE.CylinderGeometry(0.45, 0.55, 0.12, 32), goldMat);
+        pan.position.set(1.7*side, 0.35, 0);
+        panGroup.add(pan);
+
+        const dish = new THREE.Mesh(new THREE.TorusGeometry(0.40, 0.04, 12, 40), goldMat);
+        dish.position.set(1.7*side, 0.41, 0);
+        dish.rotation.x = Math.PI/2;
+        panGroup.add(dish);
+
+        return panGroup;
+      }
+      const panL = makePan(-1);
+      const panR = makePan(1);
+      scales.add(panL, panR);
+
+      scales.position.set(0, 0.0, -0.2);
+      scales.scale.set(0.9, 0.9, 0.9);
+      group.add(scales);
+
+      // Abstract legal shapes (glass + gold edges)
+      const abstract = new THREE.Group();
+
+      const knot = new THREE.Mesh(new THREE.TorusKnotGeometry(0.75, 0.18, 140, 18), glassMat);
+      knot.position.set(-2.2, 0.7, -2.2);
+      knot.rotation.set(0.5, -0.5, 0.2);
+      abstract.add(knot);
+
+      const ring = new THREE.Mesh(new THREE.TorusGeometry(1.05, 0.08, 18, 90), goldMat);
+      ring.position.set(2.2, 0.2, -2.0);
+      ring.rotation.set(0.2, 0.6, 0.3);
+      abstract.add(ring);
+
+      const capsule = new THREE.Mesh(new THREE.CapsuleGeometry(0.34, 1.25, 8, 24), glassMat);
+      capsule.position.set(2.8, -0.75, -3.0);
+      capsule.rotation.set(-0.4, 0.2, 0.55);
+      abstract.add(capsule);
+
+      group.add(abstract);
+
+      // Particle glints
+      const glintsCount = 180;
+      const positions = new Float32Array(glintsCount * 3);
+      const sizes = new Float32Array(glintsCount);
+      for (let i=0;i<glintsCount;i++){
+        const rx = (Math.random() * 2 - 1) * 7.0;
+        const ry = (Math.random() * 2 - 1) * 3.6;
+        const rz = -Math.random() * 7.0;
+        positions[i*3+0] = rx;
+        positions[i*3+1] = ry;
+        positions[i*3+2] = rz;
+        sizes[i] = Math.random() * 1.2 + 0.4;
+      }
+      const glintsGeo = new THREE.BufferGeometry();
+      glintsGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      glintsGeo.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+      const glintsMat = new THREE.PointsMaterial({
+        color: 0xF6E1A8,
+        size: 0.035,
+        transparent: true,
+        opacity: 0.45,
+        depthWrite: false
+      });
+      const glints = new THREE.Points(glintsGeo, glintsMat);
+      group.add(glints);
+
+      // Postprocessing (bloom)
+      let composer = null;
+      try{
+        composer = new THREE.EffectComposer(renderer);
+        composer.addPass(new THREE.RenderPass(scene, camera));
+        const bloom = new THREE.UnrealBloomPass(
+          new THREE.Vector2(window.innerWidth, window.innerHeight),
+          0.65, // strength
+          0.75, // radius
+          0.12  // threshold
+        );
+        composer.addPass(bloom);
+      }catch(err){
+        composer = null;
+      }
+
+      // Parallax / scroll coupling
+      let pointerX = 0, pointerY = 0;
+      window.addEventListener('pointermove', (e)=>{
+        pointerX = (e.clientX / window.innerWidth) * 2 - 1;
+        pointerY = (e.clientY / window.innerHeight) * 2 - 1;
+      }, { passive: true });
+
+      function onResize(){
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        if (composer) composer.setSize(window.innerWidth, window.innerHeight);
+      }
+      window.addEventListener('resize', onResize);
+
+      let t = 0;
+      function animate(){
+        t += 0.008;
+
+        const scrollY = window.scrollY || 0;
+        const scrollFactor = Math.min(scrollY / (window.innerHeight*1.6), 1.2);
+
+        // Gentle camera drift
+        const tx = pointerX * 0.32;
+        const ty = -pointerY * 0.22;
+
+        camera.position.x = THREE.MathUtils.lerp(camera.position.x, tx, 0.05);
+        camera.position.y = THREE.MathUtils.lerp(camera.position.y, 0.12 + ty, 0.05);
+        camera.lookAt(0, 0.2 - scrollFactor*0.5, -1.6);
+
+        // Group parallax depth shift with scroll
+        group.position.y = THREE.MathUtils.lerp(group.position.y, -scrollFactor*0.75, 0.06);
+        group.position.x = THREE.MathUtils.lerp(group.position.x, pointerX*0.10, 0.05);
+
+        // Scales micro-animations
+        scales.rotation.y = Math.sin(t*0.9) * 0.12 + pointerX*0.08;
+        scales.rotation.x = Math.cos(t*0.7) * 0.04 + (-pointerY)*0.03;
+        beam.rotation.y = Math.sin(t*0.9) * 0.05;
+
+        const sway = Math.sin(t*1.35) * 0.10;
+        panL.position.y = 0.0 + sway*0.35;
+        panR.position.y = 0.0 - sway*0.35;
+
+        // Abstract slow float
+        knot.rotation.x += 0.0035;
+        knot.rotation.y += 0.0025;
+        ring.rotation.y += 0.003;
+        capsule.rotation.z += 0.002;
+
+        pillarL.rotation.y = 0.22 + Math.sin(t*0.5)*0.03 + pointerX*0.03;
+        pillarR.rotation.y = -0.22 + Math.cos(t*0.5)*0.03 + pointerX*0.03;
+
+        // Glints shimmer
+        glints.material.opacity = 0.30 + (Math.sin(t*1.5)*0.08 + 0.08);
+
+        if (composer && !prefersReduced){
+          composer.render();
+        } else {
+          renderer.render(scene, camera);
+        }
+
+        requestAnimationFrame(animate);
+      }
+      animate();
+    })();
+  </script>
+</body>
+</html>
