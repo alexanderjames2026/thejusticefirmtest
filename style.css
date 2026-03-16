@@ -1,5 +1,5 @@
  :root {
-            --navy: #7fb8a6c5;
+            --navy: #5f8a7cc5;
             --dark-navy: #0f2a38;
             --gold: #c9a86a;
             --gold-light: #7fb8a6;
@@ -45,6 +45,13 @@ color:white;
 
         .gold-gradient {
             background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .navy-gradient {
+            background: linear-gradient(135deg, var(--charcoal) 0%, var(--dark-navy) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -692,4 +699,275 @@ color:var(--gold);
 
 .page-cta{
 padding:100px 20px;
+}
+
+/* CONTACT SECTION OVERLAY */
+
+.contact-overlay{
+position:absolute;
+inset:0;
+z-index:10;
+
+/* dark cinematic overlay */
+background:linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--dark-navy), transparent 30%) 50%,
+        color-mix(in srgb, var(--navy), transparent 30%) 0%,
+        color-mix(in srgb, var(--charcoal), transparent 30%) 50%
+    );
+}
+
+.contact-overlay::after{
+content:"";
+position:absolute;
+inset:0;
+
+background:linear-gradient(
+90deg,
+transparent,
+rgba(255,215,0,0.08),
+transparent
+);
+
+pointer-events:none;
+}
+
+/* ================= SCROLL POPUP / REVEAL ================= */
+
+.reveal{
+opacity:0;
+transform:translateY(60px) scale(.95);
+transition:all .8s cubic-bezier(.17,.67,.3,1);
+will-change:transform,opacity;
+}
+
+/* when visible */
+.reveal.active{
+opacity:1;
+transform:translateY(0) scale(1);
+}
+
+/* stagger animation */
+.reveal:nth-child(1){transition-delay:.05s;}
+.reveal:nth-child(2){transition-delay:.1s;}
+.reveal:nth-child(3){transition-delay:.15s;}
+.reveal:nth-child(4){transition-delay:.2s;}
+.reveal:nth-child(5){transition-delay:.25s;}
+.reveal:nth-child(6){transition-delay:.3s;}
+.reveal:nth-child(7){transition-delay:.35s;}
+.reveal:nth-child(8){transition-delay:.4s;}
+.reveal:nth-child(9){transition-delay:.45s;}
+
+
+
+.about-hero{
+    height:90vh;
+    background-image:url("about-hero.jpg");
+    background-size:cover;
+    background-position:center;
+    background-attachment: fixed;
+    background-repeat:no-repeat;
+    position:relative;
+}
+
+.p-hero{
+    height:90vh;
+    background-image:url("p-hero.png");
+    background-size:cover;
+    background-position:center;
+    background-attachment: fixed;
+    background-repeat:no-repeat;
+    position:relative;
+}
+
+/* dark overlay for readability */
+.ahero-overlay{
+    width:100%;
+    height:100%;
+    background: linear-gradient(135deg, 
+                color-mix(in srgb, var(--dark-navy), transparent 30%) 50%, 
+                color-mix(in srgb, var(--navy), transparent 30%) 0%, 
+                color-mix(in srgb, var(--charcoal), transparent 30%) 50%);
+
+     background-attachment: fixed;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:20px;
+}
+
+/* content styling */
+.hero-content{
+    max-width:800px;
+}
+
+.hero-content h1{
+    font-size:56px;
+    font-weight:700;
+    margin-bottom:20px;
+}
+
+.hero-content p{
+    font-size:18px;
+    opacity:.85;
+    line-height:1.7;
+}
+
+#problem, #cprocess, #faq {
+background: linear-gradient(135deg, var(--dark-navy) 0%, var(--charcoal) 50%, var(--navy) 100%);
+}
+
+
+
+/* ===============================
+   FAQ SECTION
+================================ */
+
+.faq-container{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+.faq-item{
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:14px;
+    overflow:hidden;
+    transition:.3s;
+}
+
+.faq-item:hover{
+    border-color:#c9a86a;
+}
+
+/* QUESTION */
+.faq-question{
+    width:100%;
+    padding:22px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-size:18px;
+    font-weight:500;
+    cursor:pointer;
+    background:none;
+    color:white;
+}
+
+.faq-icon{
+    font-size:22px;
+    color:#c9a86a;
+    transition:.3s;
+}
+
+/* ANSWER */
+.faq-answer{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .45s ease;
+    padding:0 22px;
+}
+
+.faq-answer p{
+    padding-bottom:22px;
+    opacity:.8;
+    line-height:1.7;
+}
+
+/* ACTIVE STATE */
+.faq-item.active .faq-answer{
+    max-height:200px;
+}
+
+.faq-item.active .faq-icon{
+    transform:rotate(45deg);
+}
+
+/* =============================
+   CARD BACKGROUND SYSTEM
+============================= */
+
+.glass-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 18px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: transform .4s ease, box-shadow .4s ease;
+}
+
+/* DARK OVERLAY FOR READABILITY */
+.glass-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(8,26,36,0.55),
+        rgba(8,26,36,0.85)
+    );
+    z-index: 0;
+}
+
+/* KEEP CONTENT ABOVE IMAGE */
+.glass-card > * {
+    position: relative;
+    z-index: 2;
+}
+
+/* HOVER EFFECT */
+.glass-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+
+.card-afff {
+    background-image: url("afff.jpg");
+}
+
+.card-talcum {
+    background-image: url("talcum.jpg");
+}
+
+.card-roundup {
+    background-image: url("roundup.jpg");
+}
+
+.card-bard {
+    background-image: url("bard.jpg");
+}
+
+.card-camp {
+    background-image: url("camp-lejeune.jpg");
+}
+
+.card-cartiva {
+    background-image: url("cartiva.jpg");
+}
+
+.card-hair {
+    background-image: url("hair-relaxer.jpg");
+}
+
+.card-hernia {
+    background-image: url("hernia.jpg");
+}
+
+.card-nec {
+    background-image: url("nec.jpg");
+}
+
+.card-pfas {
+    background-image: url("pfas.jpg");
+}
+
+.card-paraquat {
+    background-image: url("paraquat.jpg");
+}
+
+.card-zantac {
+    background-image: url("zantac.jpg");
 }

@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="shortcut icon" href="fav.png" type="image/x-icon">
-<title>About CHC | Our Mission & Consumer Advocacy</title>
 
 <link rel="stylesheet" href="style.css">
 <script src="https://cdn.tailwindcss.com"></script>
-<script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
 
+<title>Mass Torts | Consumer Healthcare Compliances</title>
 </head>
 
 <body class="bg-[#081a24] text-white">
- <nav class="navbar fixed top-0 w-full z-50 px-4 py-4 border-b border-white/10 text-white">
+
+     <nav class="navbar fixed top-0 w-full z-50 px-4 py-4 border-b border-white/10 text-white">
 
 <div class="max-w-7xl mx-auto flex justify-between items-center">
 
@@ -117,7 +119,7 @@ d="M19 9l-7 7-7-7"/>
 </div>
 
 
-<a href="contact.html" class="nav-link">Contact Us</a>
+<a href="#contact" class="nav-link">Contact Us</a>
 
 </div>
 
@@ -256,323 +258,162 @@ d="M19 9l-7 7-7-7"/>
 
 </nav>
 
-<!-- HERO -->
-<section class="about-hero">
+<!-- HEADER -->
+<section class="py-24 text-center border-b border-white/10">
 
-<div class="ahero-overlay">
-
-<div class="hero-content">
-<h1>
-About <span class="gold-gradient">
-Consumer Healthcare Compliances
-</span>
+<h1 class="text-5xl font-bold mb-4">
+<span class="gold-gradient">Mass Tort </span>Lawsuits
 </h1>
 
-<p>
-Consumer Healthcare Compliances (CHC) was created to help individuals
-navigate complex healthcare-related legal challenges by providing
-education, case evaluation pathways, and connections to experienced
-legal professionals across the United States.
+<p class="opacity-80 max-w-2xl mx-auto">
+Mass tort litigation allows many individuals harmed by the same product or drug
+to pursue justice together while maintaining individual claims.
 </p>
-
-</div>
-
-</div>
 
 </section>
 
 
-<!-- INDUSTRY PROBLEM -->
-<section id="problem" class="py-24 px-6">
 
-<div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-14 items-center">
+<!-- LAWSUITS GRID -->
+<section class="py-20 px-6">
 
-<div>
-<h2 class="text-4xl font-bold mb-6">
-The Problem We Set Out to <span class="gold-gradient">Solve</span>
-</h2>
+<div class="max-w-7xl mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-<p class="opacity-80 mb-6">
-Every year, thousands of consumers suffer harm from defective
-medical devices, unsafe pharmaceuticals, toxic exposure, and
-corporate negligence. Despite widespread harm, many individuals
-never pursue claims because they lack awareness, guidance,
-or access to experienced legal representation.
+<!-- AFFF -->
+<div class="glass-card p-8 card-afff reveal">
+<h3 class="text-2xl font-bold mb-3">AFFF Lawsuit</h3>
+<p class="opacity-80 mb-5">
+Firefighting foam containing PFAS chemicals has been linked to serious health
+conditions including cancer and environmental contamination.
 </p>
-
-<p class="opacity-80 mb-6">
-Legal systems can be intimidating. Medical terminology,
-eligibility standards, and multi-state litigation processes
-often discourage victims from seeking justice.
-</p>
-
-<p class="opacity-80">
-Consumer Healthcare Compliances (CHC) was designed to simplify that first step — helping consumers
-understand whether their situation may qualify for legal review.
-</p>
+<a href="afff.html" class="btn-gold text-sm">Learn More</a>
 </div>
 
-<div>
-<img src="about.jpg" class="rounded-xl shadow-2xl w-full h-[450px] object-cover">
+
+<!-- TALCUM -->
+<div class="glass-card p-8 card-talcum reveal">
+<h3 class="text-2xl font-bold mb-3">Talcum Powder Lawsuit</h3>
+<p class="opacity-80 mb-5">
+Talcum powder products have been associated with ovarian cancer and other
+serious health risks due to possible asbestos contamination.
+</p>
+<a href="talcum.html" class="btn-gold text-sm">Learn More</a>
 </div>
 
+
+<!-- ROUNDUP -->
+<div class="glass-card p-8 card-roundup reveal">
+<h3 class="text-2xl font-bold mb-3">Roundup Herbicide</h3>
+<p class="opacity-80 mb-5">
+Roundup weed killer has been linked to non-Hodgkin’s lymphoma and other
+serious illnesses caused by exposure to glyphosate.
+</p>
+<a href="roundup.html" class="btn-gold text-sm">Learn More</a>
 </div>
 
+
+<!-- BARD -->
+<div class="glass-card p-8 card-bard reveal">
+<h3 class="text-2xl font-bold mb-3">BARD PowerPort</h3>
+<p class="opacity-80 mb-5">
+Patients claim that Bard PowerPort devices caused infections,
+blood clots, and device failures after implantation.
+</p>
+<a href="bard.html" class="btn-gold text-sm">Learn More</a>
+</div>
+
+
+<!-- CAMP LEJEUNE -->
+<div class="glass-card p-8 card-camp-lejeune reveal">
+<h3 class="text-2xl font-bold mb-3">Camp Lejeune</h3>
+<p class="opacity-80 mb-5">
+Veterans and families exposed to contaminated water at Camp Lejeune
+may be eligible to seek compensation.
+</p>
+<a href="camp-lejeune.html" class="btn-gold text-sm">Learn More</a>
+</div>
+
+
+<!-- CARTIVA -->
+<div class="glass-card p-8 card-cartiva reveal">
+<h3 class="text-2xl font-bold mb-3">Cartiva Implant</h3>
+<p class="opacity-80 mb-5">
+The Cartiva implant has been linked to pain, implant failure,
+and the need for revision surgery.
+</p>
+<a href="cartiva.html" class="btn-gold text-sm">Learn More</a>
+</div>
+
+
+<!-- HAIR RELAXER -->
+<div class="glass-card p-8 card-hair-relaxer reveal">
+<h3 class="text-2xl font-bold mb-3">Hair Relaxer</h3>
+<p class="opacity-80 mb-5">
+Hair relaxer chemicals have been associated with uterine cancer
+and reproductive health problems in long-term users.
+</p>
+<a href="hair-relaxer.html" class="btn-gold text-sm">Learn More</a>
+</div>
+
+
+<!-- HERNIA MESH -->
+<div class="glass-card p-8 card-hernia-mesh reveal">
+<h3 class="text-2xl font-bold mb-3">Hernia Mesh</h3>
+<p class="opacity-80 mb-5">
+Defective hernia mesh products have caused internal injuries,
+pain, infections, and repeat surgeries.
+</p>
+<a href="hernia-mesh.html" class="btn-gold text-sm">Learn More</a>
+</div>
+
+
+<!-- NEC -->
+<div class="glass-card p-8 card-nec reveal">
+<h3 class="text-2xl font-bold mb-3">NEC Lawsuit</h3>
+<p class="opacity-80 mb-5">
+Infant formula lawsuits claim certain products increased the risk
+of necrotizing enterocolitis in premature babies.
+</p>
+<a href="nec.html" class="btn-gold text-sm">Learn More</a>
+</div>
+
+
+<!-- PFAS -->
+<div class="glass-card p-8 card-pfas reveal">
+<h3 class="text-2xl font-bold mb-3">PFAS</h3>
+<p class="opacity-80 mb-5">
+Exposure to PFAS “forever chemicals” has been linked to
+serious health issues and environmental contamination.
+</p>
+<a href="pfas.html" class="btn-gold text-sm">Learn More</a>
+</div>
+
+
+<!-- PARAQUAT -->
+<div class="glass-card p-8 card-paraquat reveal">
+<h3 class="text-2xl font-bold mb-3">Paraquat</h3>
+<p class="opacity-80 mb-5">
+The herbicide Paraquat has been linked to Parkinson’s disease
+and neurological damage in agricultural workers.
+</p>
+<a href="paraquat.html" class="btn-gold text-sm">Learn More</a>
+</div>
+
+
+<!-- ZANTAC -->
+<div class="glass-card p-8 card-zantac reveal">
+<h3 class="text-2xl font-bold mb-3">Zantac</h3>
+<p class="opacity-80 mb-5">
+Zantac has been linked to NDMA contamination,
+a chemical associated with increased cancer risk.
+</p>
+<a href="zantac.html" class="btn-gold text-sm">Learn More</a>
+</div>
+
+
+</div>
 </section>
 
-
-<!-- OUR APPROACH -->
-<section class="py-24 px-6 bg-white/5">
-
-<div class="max-w-6xl mx-auto">
-
-<h2 class="text-4xl font-bold text-center mb-14">
-Our <span class="gold-gradient">Approach</span>
-</h2>
-
-<div class="grid md:grid-cols-3 gap-10 text-center">
-
-<div class="glass-card p-8">
-<i data-lucide="search" class="mx-auto mb-4"></i>
-<h3 class="font-semibold text-xl mb-3">Research Driven</h3>
-<p class="opacity-70">
-We monitor emerging litigation, recalls, and healthcare safety
-issues to keep consumers informed.
-</p>
-</div>
-
-<div class="glass-card p-8">
-<i data-lucide="clipboard-check" class="mx-auto mb-4"></i>
-<h3 class="font-semibold text-xl mb-3">Structured Evaluation</h3>
-<p class="opacity-70">
-Information submitted by consumers is reviewed through a
-qualification process before attorney connection.
-</p>
-</div>
-
-<div class="glass-card p-8">
-<i data-lucide="link" class="mx-auto mb-4"></i>
-<h3 class="font-semibold text-xl mb-3">Attorney Connection</h3>
-<p class="opacity-70">
-Qualified individuals may be connected with independent
-licensed attorneys experienced in mass tort litigation.
-</p>
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- HOW CASE QUALIFICATION WORKS -->
-<section id="cprocess" class="py-24 px-6">
-
-<div class="max-w-6xl mx-auto">
-
-<h2 class="text-4xl font-bold text-center mb-16">
-Case Qualification <span class="gold-gradient">Process</span>
-</h2>
-
-<div class="grid md:grid-cols-4 gap-10 text-center">
-
-<div>
-<div class="text-3xl gold-gradient font-bold mb-3">01</div>
-<p class="opacity-80">Consumer submits a secure case inquiry.</p>
-</div>
-
-<div>
-<div class="text-3xl gold-gradient font-bold mb-3">02</div>
-<p class="opacity-80">Information reviewed against litigation criteria.</p>
-</div>
-
-<div>
-<div class="text-3xl gold-gradient font-bold mb-3">03</div>
-<p class="opacity-80">Eligibility indicators evaluated.</p>
-</div>
-
-<div>
-<div class="text-3xl gold-gradient font-bold mb-3">04</div>
-<p class="opacity-80">Connection with participating attorneys if qualified.</p>
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- WHY TRUST CHC -->
-<section class="py-24 px-6 bg-white/5">
-
-<div class="max-w-6xl mx-auto text-center">
-
-<h2 class="text-4xl font-bold mb-14">
-Why Consumers Trust <span class="gold-gradient">CHC</span>
-</h2>
-
-<div class="grid md:grid-cols-4 gap-10">
-
-<div>
-<h3 class="text-3xl font-bold gold-gradient">24/7</h3>
-<p class="opacity-70">Case Intake Availability</p>
-</div>
-
-<div>
-<h3 class="text-3xl font-bold gold-gradient">Nationwide</h3>
-<p class="opacity-70">Attorney Network Access</p>
-</div>
-
-<div>
-<h3 class="text-3xl font-bold gold-gradient">No Cost</h3>
-<p class="opacity-70">Initial Case Review</p>
-</div>
-
-<div>
-<h3 class="text-3xl font-bold gold-gradient">Consumer First</h3>
-<p class="opacity-70">Education Focused Model</p>
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- ETHICS & COMPLIANCE -->
-<section class="py-24 px-6">
-
-<div class="max-w-5xl mx-auto">
-
-<h2 class="text-4xl font-bold mb-8 text-center">
-Ethics & <span class="gold-gradient">Compliance</span>
-</h2>
-
-<p class="opacity-80 mb-6 text-center">
-Transparency and responsible communication are central to CHC’s
-operations. We maintain strict standards regarding consumer privacy,
-data handling, and advertising compliance.
-</p>
-
-<ul class="space-y-4 opacity-80 max-w-3xl mx-auto list-style-type:disc" style="list-style-type:disc">
-<li> Clear disclosure that CHC is not a law firm.</li>
-<li> No legal advice is provided directly.</li>
-<li> Secure handling of submitted information.</li>
-<li> Connections only with licensed independent attorneys.</li>
-</ul>
-
-</div>
-
-</section>
-
-
-<section id="faq" class="faq-section py-24 px-6">
-
-<div class="max-w-4xl mx-auto">
-
-<h2 class="text-4xl font-bold text-center mb-14">
-Frequently Asked <span class="gold-gradient">Questions</span>
-</h2>
-
-<div class="faq-container">
-
-<!-- FAQ ITEM -->
-<div class="faq-item">
-<button class="faq-question">
-What does Consumer Healthcare Compliances do?
-<span class="faq-icon">+</span>
-</button>
-
-<div class="faq-answer">
-<p>
-Consumer Healthcare Compliances is a consumer support and information platform that helps individuals learn about potential class action lawsuits related to defective products, medications, or medical devices. The platform collects basic information from consumers who believe they may have been affected and helps connect them with law firms involved in ongoing class action litigation.
-</p>
-</div>
-</div>
-
-<!-- FAQ ITEM -->
-<div class="faq-item">
-<button class="faq-question">
-Is Consumer Healthcare Compliances a law firm?
-<span class="faq-icon">+</span>
-</button>
-
-<div class="faq-answer">
-<p>
-Consumer Healthcare Compliances is not a law firm and does not provide legal advice or legal representation. Its role is limited to providing information, gathering case details, and facilitating contact with law firms handling the class action cases.
-</p>
-</div>
-</div>
-
-<!-- FAQ ITEM -->
-<div class="faq-item">
-<button class="faq-question">
-What type of services does CHC provide?
-<span class="faq-icon">+</span>
-</button>
-
-<div class="faq-answer">
-<p>
-Consumer Healthcare Compliances (CHC) helps individuals connect with qualified legal professionals handling personal injury, mass tort, and class action cases related to defective medical devices, dangerous pharmaceuticals, and healthcare compliance issues.
-</p>
-</div>
-</div>
-
-<!-- FAQ ITEM -->
-<div class="faq-item">
-<button class="faq-question">
-How do I know if I may qualify to participate in a claim review?
-<span class="faq-icon">+</span>
-</button>
-
-<div class="faq-answer">
-<p>
-You may qualify by completing our secure online form and providing basic information about your situation. Your responses are reviewed to determine whether your case meets the criteria for an ongoing mass tort or class action claim, and if eligible, you may be connected with a qualified legal professional for further evaluation.
-</p>
-</div>
-</div>
-
-<!-- FAQ ITEM -->
-<div class="faq-item">
-<button class="faq-question">
-Is there any cost to submit my information?
-<span class="faq-icon">+</span>
-</button>
-
-<div class="faq-answer">
-<p>
-No. Submitting your information through CHC is completely free and comes with no obligation. If you choose to move forward with a qualified legal professional, you typically do not pay anything out of pocket. Legal fees are generally handled on a contingency basis, meaning any agreed fees are deducted from the settlement or claim amount only if compensation is recovered.
-</p>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-</div>
-
-</section>
-
-
-<!-- CTA -->
-<section class="py-28 text-center">
-
-<h2 class="text-4xl font-bold mb-6">
-Start Your <span class="gold-gradient">Free Case Review</span>
-</h2>
-
-<a href="contact.html" class="btn-gold">
-Request Consultation
-</a>
-
-</section>
-
-
-<!-- DISCLAIMER -->
 <footer class="bg-[#081a24] border-t border-white/10 pt-20 pb-10 px-6">
 
 <div class="max-w-7xl mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-12">
@@ -629,8 +470,8 @@ Quick Links
 <li><a href="index.html" class="footer-link">Home</a></li>
 <li><a href="about.html" class="footer-link">About Us</a></li>
 <li><a href="#practice" class="footer-link">Practice Areas</a></li>
-<li><a href="privacy.html" class="footer-link">Privacy Policy</a></li>
-<li><a href="contact.html" class="footer-link">Contact Us</a></li>
+<li><a href="#testimonials" class="footer-link">Client Reviews</a></li>
+<li><a href="#contact" class="footer-link">Contact Us</a></li>
 
 </ul>
 
@@ -714,28 +555,42 @@ support@consumerhealthcarecompliances.com
 </footer>
 
 <script>
-lucide.createIcons();
 
-const faqItems = document.querySelectorAll(".faq-item");
+    if (window.lucide) {
+    lucide.createIcons();
+}
 
-faqItems.forEach(item => {
 
-    const question = item.querySelector(".faq-question");
+    /* ================= SCROLL POPUP REVEAL ================= */
 
-    question.addEventListener("click", () => {
+document.addEventListener("DOMContentLoaded", () => {
 
-        // close others
-        faqItems.forEach(i=>{
-            if(i !== item) i.classList.remove("active");
-        });
+const revealElements = document.querySelectorAll(".reveal");
 
-        // toggle current
-        item.classList.toggle("active");
-    });
+const revealObserver = new IntersectionObserver((entries, observer)=>{
+
+entries.forEach(entry=>{
+
+if(entry.isIntersecting){
+
+entry.target.classList.add("active");
+
+observer.unobserve(entry.target);
+
+}
+
+});
+
+},{
+threshold:0.15
+});
+
+revealElements.forEach(el=>{
+revealObserver.observe(el);
+});
 
 });
 
 </script>
-
 </body>
 </html>
